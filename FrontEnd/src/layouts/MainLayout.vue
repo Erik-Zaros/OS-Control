@@ -26,24 +26,50 @@
         />
       </div>
 
-      <q-list class="drawer-list">
-        <q-item clickable v-ripple to="/" exact>
-          <q-item-section avatar>
-            <q-icon name="dashboard" />
-          </q-item-section>
-          <q-item-section v-if="!miniState || isHovering">
-            <span class="drawer-text">Dashboard</span>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-ripple to="/clientes">
-          <q-item-section avatar>
-            <q-icon name="people" />
-          </q-item-section>
-          <q-item-section v-if="!miniState || isHovering">
-            <span class="drawer-text">Clientes</span>
-          </q-item-section>
-        </q-item>
-      </q-list>
+<q-list padding class="drawer-list text-grey-8">
+  <q-expansion-item icon="dashboard" label="Dashboard" dense default-opened>
+    <q-item clickable to="/" exact>
+      <q-item-section>Visão Geral</q-item-section>
+    </q-item>
+  </q-expansion-item>
+
+  <q-expansion-item icon="group" label="Gestão de Usuários" dense>
+    <q-item clickable to="/tecnicos">
+      <q-item-section>Técnicos</q-item-section>
+    </q-item>
+  </q-expansion-item>
+
+  <q-expansion-item icon="app_registration" label="Cadastro" dense>
+    <q-item clickable to="/clientes">
+      <q-item-section>Clientes</q-item-section>
+    </q-item>
+    <q-item clickable to="/produtos">
+      <q-item-section>Produtos</q-item-section>
+    </q-item>
+  </q-expansion-item>
+
+  <q-expansion-item icon="build" label="Ordens de Serviço" dense>
+    <q-item clickable to="/os/cadastro">
+      <q-item-section>Cadastrar OS</q-item-section>
+    </q-item>
+    <q-item clickable to="/os/consulta">
+      <q-item-section>Consultar OS</q-item-section>
+    </q-item>
+  </q-expansion-item>
+
+  <q-expansion-item icon="event" label="Agenda" dense>
+    <q-item clickable to="/agenda">
+      <q-item-section>Agenda dos Técnicos</q-item-section>
+    </q-item>
+  </q-expansion-item>
+
+  <q-expansion-item icon="cloud_upload" label="Integrações" dense>
+    <q-item clickable to="/integracoes/checkin">
+      <q-item-section>Exportar para Checkin</q-item-section>
+    </q-item>
+  </q-expansion-item>
+</q-list>
+
     </q-drawer>
 
     <q-page-container>
