@@ -121,6 +121,8 @@ const handleSubmit = async () => {
     }
   } catch {
     erro('Erro ao cadastrar/editar cliente!')
+  } finally {
+    loading.value = false
   }
 }
 </script>
