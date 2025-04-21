@@ -45,7 +45,7 @@
   
   <script setup>
   import { ref, computed } from 'vue'
-  import axios from 'boot/axios'
+  import { api } from 'boot/axios'
   import { useQuasar } from 'quasar'
   import serviceCoreLight from 'src/assets/serviceCore.png'
   import serviceCoreDark from 'src/assets/serviceCoreDark.png'
@@ -68,9 +68,8 @@
   
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/api/Usuario/criar-usuario', form.value)
+      await api.post('/Usuario/criar-usuario', form.value)
       $q.notify({ type: 'positive', message: 'Usuário cadastrado com sucesso!' })
-      console.log(response.data)
     } catch (error) {
       $q.notify({ type: 'negative', message: 'Erro ao cadastrar usuário!' })
       console.error(error)

@@ -6,7 +6,7 @@
         <q-toolbar-title>{{ pageTitle }}</q-toolbar-title>
         <q-space />
         <q-btn flat dense round :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'" @click="toggleDarkMode" />
-        <q-btn flat dense round icon="account_circle" @click="perfilDialog = true" />
+        <q-btn flat dense round icon="account_circle" @click="loadUserData(); perfilDialog = true" />
       </q-toolbar>
     </q-header>
 
@@ -90,8 +90,8 @@
                 <q-icon name="person" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Erik Delanda Zaros</q-item-label>
-                <q-item-label caption>erik@example.com</q-item-label>
+                <q-item-label>{{ usuario.nome }}</q-item-label>
+                <q-item-label caption>{{ usuario.email }}</q-item-label>
               </q-item-section>
             </q-item>
             <q-item>
@@ -99,7 +99,7 @@
                 <q-icon name="work" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Tipo: Operador</q-item-label>
+                <q-item-label>Tipo: {{ usuario.tipoUsuario }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -110,7 +110,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
 
@@ -126,6 +126,28 @@ const leftDrawerOpen = ref(true)
 const miniState = ref(false)
 const isHovering = ref(false)
 const perfilDialog = ref(false)
+const usuario = ref({
+  nome: '',
+  email: '',
+  tipoUsuario: ''
+})
+
+const loadUserData = () => {
+  const usuarioData = localStorage.getItem('usuario')
+  if (usuarioData) {
+    usuario.value = JSON.parse(usuarioData)
+  }
+}
+
+watch(perfilDialog, (newValue) => {
+  if (newValue) {
+    loadUserData()
+  }
+})
+
+onMounted(() => {
+  loadUserData()
+})
 
 function toggleMini() {
   miniState.value = !miniState.value
