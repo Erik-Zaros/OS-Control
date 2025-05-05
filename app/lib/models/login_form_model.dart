@@ -9,17 +9,17 @@ class LoginFormModel extends ChangeNotifier {
   String get password => _password;
   bool get isLoading => _isLoading;
 
-  set email(String value) {
+  void updateEmail(String value) {
     _email = value;
     notifyListeners();
   }
 
-  set password(String value) {
+  void updatePassword(String value) {
     _password = value;
     notifyListeners();
   }
 
-  set isLoading(bool value) {
+  void setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
   }
@@ -34,5 +34,20 @@ class LoginFormModel extends ChangeNotifier {
     if (value == null || value.isEmpty) return 'insira uma senha';
     if (value.length <= 6) return 'a senha deve ter mais de 6 caracteres';
     return null;
+  }
+
+  Future<bool> submitLogin(GlobalKey<FormState> formKey) async {
+    if (!formKey.currentState!.validate()) return false;
+
+    setLoading(true);
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      return true;
+    } catch (e) {
+      debugPrint('Erro ao fazer login: $e');
+      return false;
+    } finally {
+      setLoading(false);
+    }
   }
 }

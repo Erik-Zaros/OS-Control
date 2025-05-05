@@ -43,7 +43,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) =>
-                      context.read<LoginFormModel>().email = value,
+                      context.read<LoginFormModel>().updateEmail(value),
                   validator: context.read<LoginFormModel>().validateEmail,
                 );
               },
@@ -59,7 +59,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) =>
-                      context.read<LoginFormModel>().password = value,
+                      context.read<LoginFormModel>().updatePassword(value),
                   validator: context.read<LoginFormModel>().validatePassword,
                 );
               },
@@ -71,19 +71,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: model.isLoading
-                        ? null
-                        : () async {
-                            if (_formKey.currentState!.validate()) {
-                              model.isLoading = true;
-                              await Future.delayed(
-                                  const Duration(seconds: 2));
-                              model.isLoading = false;
+                      ? null
+                      : () async {
+                          final success = await model.submitLogin(_formKey);
+                          if (success && context.mounted) {
+                            context.go('/home');
+                          }
+                        },
 
-                              if (context.mounted) {
-                                context.go('/home');
-                              }
-                            }
-                          },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
                       child: model.isLoading
