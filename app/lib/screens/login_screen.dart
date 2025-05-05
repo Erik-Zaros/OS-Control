@@ -8,9 +8,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Bem Vindo!';
     return Scaffold(
-      appBar: AppBar(title: const Text(appTitle)),
+      appBar: AppBar(title: const Text('Bem Vindo!')),
       body: const MyCustomForm(),
     );
   }
@@ -28,8 +27,6 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<LoginFormModel>(context);
-
     return Form(
       key: _formKey,
       child: Padding(
@@ -37,57 +34,72 @@ class MyCustomFormState extends State<MyCustomForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) => model.email = value,
-              validator: model.validateEmail,
+            Selector<LoginFormModel, String>(
+              selector: (_, model) => model.email,
+              builder: (_, __, ____) {
+                return TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) =>
+                      context.read<LoginFormModel>().email = value,
+                  validator: context.read<LoginFormModel>().validateEmail,
+                );
+              },
             ),
             const SizedBox(height: 16.0),
-            TextFormField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Senha',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) => model.password = value,
-              validator: model.validatePassword,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: model.isLoading
-                      ? null
-                      : () async {
-                          if (_formKey.currentState!.validate()) {
-                            model.isLoading = true;
-                            await Future.delayed(const Duration(seconds: 2));
-                            model.isLoading = false;
-
-                            if (context.mounted) {
-                              context.go('/home');
-                            }
-                          }
-                        },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: model.isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Text('Login'),
+            Selector<LoginFormModel, String>(
+              selector: (_, model) => model.password,
+              builder: (_, __, ____) {
+                return TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Senha',
+                    border: OutlineInputBorder(),
                   ),
-                ),
-              ),
+                  onChanged: (value) =>
+                      context.read<LoginFormModel>().password = value,
+                  validator: context.read<LoginFormModel>().validatePassword,
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+            Consumer<LoginFormModel>(
+              builder: (_, model, __) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: model.isLoading
+                        ? null
+                        : () async {
+                            if (_formKey.currentState!.validate()) {
+                              model.isLoading = true;
+                              await Future.delayed(
+                                  const Duration(seconds: 2));
+                              model.isLoading = false;
+
+                              if (context.mounted) {
+                                context.go('/home');
+                              }
+                            }
+                          },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: model.isLoading
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text('Login'),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
