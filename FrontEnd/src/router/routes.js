@@ -10,7 +10,10 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'clientes', component: () => import('pages/ClientesPage.vue') },
-      { path: 'produtos', component: () => import('pages/ProdutosPage.vue') }
+      { path: 'produtos', component: () => import('pages/ProdutosPage.vue') },
+      { path: 'cadastro-os', component: () => import('pages/CadastroOrdemServicoPage.vue') },
+      { path: 'consulta-os', component: () => import('pages/ConsultaOrdemServicoPage.vue') },
+      { path: 'os/:numero', component: () => import('pages/VisualizarOrdemServicoPage.vue') }
     ]
   },
   {
