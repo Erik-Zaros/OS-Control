@@ -9,56 +9,36 @@
       </div>
     </div>
 
-    <form-cliente
-      @cliente-cadastrado="atualizarClientes"
-      :clienteParaEditar="clienteEdicao"
-    />
+    <form-cliente @cliente-cadastrado="atualizarClientes" :clienteParaEditar="clienteEdicao" />
 
     <q-separator class="q-my-md" />
 
-    <tabela-clientes
-      :clientes="clientes"
-      @editar-cliente="editarCliente"
-    />
+    <tabela-clientes :clientes="clientes" @editar-cliente="editarCliente" />
   </q-page>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+/* global erro */
+import { ref, onMounted } from 'vue'
 import FormCliente from 'src/components/clientes/FormCliente.vue'
 import TabelaClientes from 'src/components/clientes/TabelaClientes.vue'
-import axios from 'boot/axios'
+import { api } from 'boot/axios'
 
 const clienteEdicao = ref(null)
-const clientes = ref([
-  {
-    cpf: '12345678900',
-    nome: 'João Silva',
-    cep: '17500000',
-    endereco: 'Rua A',
-    bairro: 'Centro',
-    numero: '123',
-    cidade: 'Marília',
-    estado: 'SP'
-  },
-  {
-    cpf: '98765432100',
-    nome: 'Maria Souza',
-    cep: '11000000',
-    endereco: 'Av B',
-    bairro: 'Jardins',
-    numero: '456',
-    cidade: 'São Paulo',
-    estado: 'SP'
-  }
-])
+const clientes = ref([])
 
 const carregarClientes = async () => {
   try {
-    const response = await axios.get('/api/Cliente/listar')
-    clientes.value = response.data || []
-  } catch (err) {
-    console.error('Erro ao carregar clientes:', err)
+    const response = await api.get('cliente')
+    if (response.data && response.data.success && Array.isArray(response.data.data)) {
+      clientes.value = response.data.data
+    } else {
+      clientes.value = Array.isArray(response.data) ? response.data : []
+    }
+  } catch (error) {
+    if (error.response) {
+    }
+    erro('Erro ao carregar clientes!')
   }
 }
 
@@ -68,12 +48,13 @@ function atualizarClientes() {
 }
 
 function editarCliente(cliente) {
+  console.log('Editando cliente:', cliente)
   clienteEdicao.value = { ...cliente }
 }
 
 function exportarCSV() {
-  window.open('/api/Cliente/exportar-csv', '_blank')
+  window.open('cliente/exportar-csv', '_blank')
 }
-//onMounted(carregarClientes)
+
+onMounted(carregarClientes)
 </script>
-  

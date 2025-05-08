@@ -10,65 +10,55 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      :mini="miniState && !isHovering"
-      @mouseover="isHovering = true"
-      @mouseout="isHovering = false"
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above :mini="miniState && !isHovering" @mouseover="isHovering = true"
+      @mouseout="isHovering = false" bordered>
       <div class="q-pa-md flex flex-center">
-        <q-img
-          :src="logoSidebar"
-          spinner-color="primary"
-          style="width: 100%; max-width: 120px"
-        />
+        <q-img :src="logoSidebar" spinner-color="primary" style="width: 100%; max-width: 120px" />
       </div>
 
-<q-list padding class="drawer-list text-grey-8">
-  <q-expansion-item icon="dashboard" label="Dashboard" dense default-opened>
-    <q-item clickable to="/" exact>
-      <q-item-section>Visão Geral</q-item-section>
-    </q-item>
-  </q-expansion-item>
+      <q-list padding class="drawer-list text-grey-8">
+        <q-expansion-item icon="dashboard" label="Dashboard" dense default-opened>
+          <q-item clickable to="/" exact>
+            <q-item-section>Visão Geral</q-item-section>
+          </q-item>
+        </q-expansion-item>
 
-  <q-expansion-item icon="group" label="Gestão de Usuários" dense>
-    <q-item clickable to="/tecnicos">
-      <q-item-section>Técnicos</q-item-section>
-    </q-item>
-  </q-expansion-item>
+        <q-expansion-item icon="group" label="Gestão de Usuários" dense>
+          <q-item clickable to="/tecnicos">
+            <q-item-section>Técnicos</q-item-section>
+          </q-item>
+        </q-expansion-item>
 
-  <q-expansion-item icon="app_registration" label="Cadastro" dense>
-    <q-item clickable to="/clientes">
-      <q-item-section>Clientes</q-item-section>
-    </q-item>
-    <q-item clickable to="/produtos">
-      <q-item-section>Produtos</q-item-section>
-    </q-item>
-  </q-expansion-item>
+        <q-expansion-item icon="app_registration" label="Cadastro" dense>
+          <q-item clickable to="/dashboard/clientes">
+            <q-item-section>Clientes</q-item-section>
+          </q-item>
+          <q-item clickable to="/dashboard/produtos">
+            <q-item-section>Produtos</q-item-section>
+          </q-item>
+        </q-expansion-item>
 
-  <q-expansion-item icon="build" label="Ordens de Serviço" dense>
-    <q-item clickable to="/os/cadastro">
-      <q-item-section>Cadastrar OS</q-item-section>
-    </q-item>
-    <q-item clickable to="/os/consulta">
-      <q-item-section>Consultar OS</q-item-section>
-    </q-item>
-  </q-expansion-item>
+        <q-expansion-item icon="build" label="Ordens de Serviço" dense>
+          <q-item clickable to="/os/cadastro">
+            <q-item-section>Cadastrar OS</q-item-section>
+          </q-item>
+          <q-item clickable to="/os/consulta">
+            <q-item-section>Consultar OS</q-item-section>
+          </q-item>
+        </q-expansion-item>
 
-  <q-expansion-item icon="event" label="Agenda" dense>
-    <q-item clickable to="/agenda">
-      <q-item-section>Agenda dos Técnicos</q-item-section>
-    </q-item>
-  </q-expansion-item>
+        <q-expansion-item icon="event" label="Agenda" dense>
+          <q-item clickable to="/agenda">
+            <q-item-section>Agenda dos Técnicos</q-item-section>
+          </q-item>
+        </q-expansion-item>
 
-  <q-expansion-item icon="cloud_upload" label="Integrações" dense>
-    <q-item clickable to="/integracoes/checkin">
-      <q-item-section>Exportar para Checkin</q-item-section>
-    </q-item>
-  </q-expansion-item>
-</q-list>
+        <q-expansion-item icon="cloud_upload" label="Integrações" dense>
+          <q-item clickable to="/integracoes/checkin">
+            <q-item-section>Exportar para Checkin</q-item-section>
+          </q-item>
+        </q-expansion-item>
+      </q-list>
 
     </q-drawer>
 
@@ -179,9 +169,11 @@ const logoSidebar = computed(() => {
 .q-drawer {
   width: 180px !important;
 }
+
 .q-toolbar-title {
   font-weight: bold;
 }
+
 .drawer-text {
   font-size: 16px;
   font-weight: 500;
