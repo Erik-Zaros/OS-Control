@@ -37,6 +37,7 @@
           <q-btn label="Entrar" type="submit" color="primary" class="full-width" />
           <q-toggle v-model="darkMode" label="Modo Escuro" class="q-mt-md" />
           <q-btn flat label="Criar conta" to="/cadastro-usuario" class="q-mt-sm text-primary" />
+          <!-- <q-btn flat label="Ir para o sistema" to="/dashboard" class="q-mt-sm text-primary" /> -->
           <!-- desenvolver tela de planos -->
           <!--
           <p class="text-grey-8 q-mb-sm">Ainda não adquiriu o nosso sistema?</p>
