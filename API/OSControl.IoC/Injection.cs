@@ -30,12 +30,16 @@ namespace OSControl.IoC
 
             // Repository
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
 
             // Helpers
             services.AddScoped<BCryptHash>();
 
             // Services
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<ITokenService, TokenService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

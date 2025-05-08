@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OSControl.Domain;
 using OSControl.Domain.Entities;
 
 namespace OSControl.Infrastructure.Data
@@ -11,6 +12,7 @@ namespace OSControl.Infrastructure.Data
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Produto> Produto { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

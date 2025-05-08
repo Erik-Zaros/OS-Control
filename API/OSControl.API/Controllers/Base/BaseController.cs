@@ -15,7 +15,7 @@ namespace OSControl.API.Controllers.Base
             _service = service;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public virtual async Task<IActionResult> Get()
         {
@@ -30,7 +30,7 @@ namespace OSControl.API.Controllers.Base
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> Get(int id)
         {
@@ -45,7 +45,7 @@ namespace OSControl.API.Controllers.Base
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public virtual async Task<IActionResult> Post([FromBody] T entity)
         {
@@ -60,7 +60,7 @@ namespace OSControl.API.Controllers.Base
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut]
         public virtual async Task<IActionResult> Put([FromBody] T entity)
         {
@@ -75,7 +75,7 @@ namespace OSControl.API.Controllers.Base
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> Delete(int id)
         {
