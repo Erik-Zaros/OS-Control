@@ -1,8 +1,5 @@
 <template>
   <q-page class="q-pa-md bg-grey-2 dark:bg-dark">
-    <div class="text-center q-mb-md">
-      <q-btn label="Download Excel" color="green" outline size="sm" icon="file_download" />
-    </div>
 
     <div class="row q-col-gutter-md">
       <div class="col-12 col-md-6">

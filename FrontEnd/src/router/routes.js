@@ -13,7 +13,10 @@ const routes = [
       { path: 'produtos', component: () => import('pages/ProdutosPage.vue') },
       { path: 'cadastro-os', component: () => import('pages/CadastroOrdemServicoPage.vue') },
       { path: 'consulta-os', component: () => import('pages/ConsultaOrdemServicoPage.vue') },
-      { path: 'os/:numero', component: () => import('pages/VisualizarOrdemServicoPage.vue') }
+      { path: 'os/:numero', component: () => import('pages/VisualizarOrdemServicoPage.vue') },
+      { path: 'agenda', component: () => import('pages/AgendaPage.vue') },
+      { path: 'tecnicos', component: () => import('pages/UsuariosPage.vue') },
+      { path: 'integracoes/checkin', component: () => import('pages/CheckinPage.vue') }
     ]
   },
   {

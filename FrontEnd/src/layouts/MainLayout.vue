@@ -38,14 +38,14 @@
           </q-item>
         </q-expansion-item>
 
-  <q-expansion-item icon="build" label="Ordens de Serviço" dense>
-    <q-item clickable to="/cadastro-os">
-      <q-item-section>Cadastrar OS</q-item-section>
-    </q-item>
-    <q-item clickable to="/consulta-os">
-      <q-item-section>Consultar OS</q-item-section>
-    </q-item>
-  </q-expansion-item>
+        <q-expansion-item icon="build" label="Ordens de Serviço" dense>
+          <q-item clickable to="/cadastro-os">
+            <q-item-section>Cadastrar OS</q-item-section>
+          </q-item>
+          <q-item clickable to="/consulta-os">
+            <q-item-section>Consultar OS</q-item-section>
+          </q-item>
+        </q-expansion-item>
 
         <q-expansion-item icon="event" label="Agenda" dense>
           <q-item clickable to="/agenda">
