@@ -24,8 +24,8 @@
         </q-expansion-item>
 
         <q-expansion-item icon="group" label="Gestão de Usuários" dense>
-          <q-item clickable to="/tecnicos">
-            <q-item-section>Técnicos</q-item-section>
+          <q-item clickable to="/dashboard/usuarios">
+            <q-item-section>Usuários</q-item-section>
           </q-item>
         </q-expansion-item>
 
@@ -38,23 +38,23 @@
           </q-item>
         </q-expansion-item>
 
-        <q-expansion-item icon="build" label="Ordens de Serviço" dense>
-          <q-item clickable to="/cadastro-os">
-            <q-item-section>Cadastrar OS</q-item-section>
+        <q-expansion-item icon="build" label="Tickets" dense>
+          <q-item clickable to="/dashboard/cadastro-ticket">
+            <q-item-section>Cadastrar Ticket</q-item-section>
           </q-item>
-          <q-item clickable to="/consulta-os">
-            <q-item-section>Consultar OS</q-item-section>
+          <q-item clickable to="/dashboard/consulta-ticket">
+            <q-item-section>Consultar Ticket</q-item-section>
           </q-item>
         </q-expansion-item>
 
         <q-expansion-item icon="event" label="Agenda" dense>
-          <q-item clickable to="/agenda">
+          <q-item clickable to="/dashboard/agenda">
             <q-item-section>Agenda dos Técnicos</q-item-section>
           </q-item>
         </q-expansion-item>
 
         <q-expansion-item icon="cloud_upload" label="Integrações" dense>
-          <q-item clickable to="/integracoes/checkin">
+          <q-item clickable to="/dashboard/integracoes/checkin">
             <q-item-section>Exportar para Checkin</q-item-section>
           </q-item>
         </q-expansion-item>

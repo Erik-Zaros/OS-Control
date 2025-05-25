@@ -1,13 +1,13 @@
 <template>
   <q-page class="q-pa-md bg-grey-2 dark:bg-dark">
-    <div class="text-h6 q-mb-md">Cadastro de Ordem de Serviço</div>
+    <div class="text-h6 q-mb-md">Cadastro de Ticket</div>
 
-    <form-ordem-servico @os-cadastrada="voltar" />
+    <FormTicket @os-cadastrada="voltar" />
   </q-page>
 </template>
 
 <script setup>
-import FormOrdemServico from 'src/components/os/FormOrdemServico.vue'
+import FormTicket from 'src/components/tickets/FormTicket.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

@@ -11,11 +11,11 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'clientes', component: () => import('pages/ClientesPage.vue') },
       { path: 'produtos', component: () => import('pages/ProdutosPage.vue') },
-      { path: 'cadastro-os', component: () => import('pages/CadastroOrdemServicoPage.vue') },
-      { path: 'consulta-os', component: () => import('pages/ConsultaOrdemServicoPage.vue') },
-      { path: 'os/:numero', component: () => import('pages/VisualizarOrdemServicoPage.vue') },
+      { path: 'cadastro-ticket', component: () => import('src/pages/CadastroTicketPage.vue') },
+      { path: 'consulta-ticket', component: () => import('src/pages/ConsultaTicket.vue') },
+      { path: 'ticket/:numero', component: () => import('src/pages/VisualizarTicketPage.vue') },
       { path: 'agenda', component: () => import('pages/AgendaPage.vue') },
-      { path: 'tecnicos', component: () => import('pages/UsuariosPage.vue') },
+      { path: 'usuarios', component: () => import('pages/UsuariosPage.vue') },
       { path: 'integracoes/checkin', component: () => import('pages/CheckinPage.vue') }
     ]
   },

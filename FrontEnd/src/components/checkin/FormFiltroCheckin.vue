@@ -6,27 +6,12 @@
           <q-input v-model="filtro.os" label="Nº OS" outlined dense />
         </div>
         <div class="col-md-4 col-12">
-          <q-select
-            v-model="filtro.tecnico"
-            :options="tecnicos"
-            label="Técnico"
-            outlined
-            dense
-            emit-value
-            map-options
-          />
+          <q-select v-model="filtro.tecnico" :options="tecnicos" :loading="loadingTecnicos" label="Técnico" outlined
+            dense emit-value map-options />
         </div>
-        <div class="col-md-4 col-12">
-          <q-select
-            v-model="filtro.status"
-            :options="statusOS"
-            label="Status"
-            outlined
-            dense
-            emit-value
-            map-options
-          />
-        </div>
+        <!-- <div class="col-md-4 col-12">
+          <q-select v-model="filtro.status" :options="statusOS" label="Status" outlined dense emit-value map-options />
+        </div> -->
         <div class="col-md-4 col-12">
           <q-input v-model="filtro.dataInicio" label="Data Inicial" type="date" outlined dense />
         </div>
@@ -42,21 +27,20 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, defineProps } from 'vue'
 
 const emit = defineEmits(['buscar'])
+defineProps({
+  tecnicos: { type: Array, default: () => [] },
+  loadingTecnicos: { type: Boolean, default: false }
+})
 
-const tecnicos = [
-  { label: 'Lucas Alves', value: 1 },
-  { label: 'Mariana Souza', value: 2 },
-  { label: 'Carlos Silva', value: 3 }
-]
-
-const statusOS = [
-  { label: 'Pendente', value: 'pendente' },
-  { label: 'Em andamento', value: 'em_andamento' },
-  { label: 'Finalizada', value: 'finalizada' }
-]
+// const statusOS = [
+//   { label: 'Aguardando exportação', value: 0 },
+//   { label: 'Em andamento', value: 1 },
+//   { label: 'Concluída', value: 2 },
+//   { label: 'Exportada para Checkin', value: 3 }
+// ]
 
 const filtro = ref({
   os: '',

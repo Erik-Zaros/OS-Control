@@ -1,135 +1,199 @@
 <template>
-  <q-form @submit.prevent="handleSubmit">
-    <loading-overlay :loading="loading" />
+  <q-form @submit.prevent="handleSubmit" ref="formRef">
+    <loading-overlay :loading="props.loading" />
 
     <q-card class="q-pa-md" :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-white'">
+      <q-card-section>
+        <div class="text-h6">{{ isEdicao ? 'Editar Usuário' : 'Novo Usuário' }}</div>
+      </q-card-section>
+
       <div class="row q-col-gutter-md">
         <div class="col-md-6 col-12">
-          <q-input v-model="usuario.nome" label="Nome Completo" outlined dense required maxlength="80" />
+          <q-input v-model="usuario.nome" label="Nome Completo *" outlined dense maxlength="100" />
         </div>
+
         <div class="col-md-6 col-12">
-          <q-input v-model="usuario.funcao" label="Função" outlined dense maxlength="40" />
+          <q-input v-model="usuario.email" label="E-mail *" outlined dense type="email" maxlength="150" :rules="[
+          ]" />
         </div>
+
         <div class="col-md-4 col-12">
-          <q-input v-model="usuario.login" label="Login" outlined dense required maxlength="40" />
+          <q-input v-model="usuario.login" label="Login *" outlined dense maxlength="50" />
         </div>
+
         <div class="col-md-4 col-12">
-          <q-input v-model="usuario.email" label="E-mail" outlined dense type="email" maxlength="80" />
+          <q-input v-model="usuario.telefone" label="Telefone" outlined dense mask="(##) #####-####" maxlength="20" />
         </div>
+
         <div class="col-md-4 col-12">
-          <q-input v-model="usuario.telefone" label="Telefone" outlined dense mask="(##) #####-####" maxlength="15" />
+          <q-select v-model="usuario.tipoUsuario" :options="tiposUsuario" label="Tipo de Usuário *" outlined dense
+            emit-value map-options />
         </div>
-        <div class="col-md-4 col-12">
-          <q-select
-            v-model="usuario.tipousuario"
-            :options="tiposUsuario"
-            label="Tipo de Usuário"
-            outlined
-            dense
-            emit-value
-            map-options
-          />
+
+        <div class="col-md-6 col-12" v-if="!isEdicao">
+          <q-input v-model="usuario.senha" label="Senha *" outlined dense type="password" maxlength="255" />
         </div>
-        <div class="col-md-4 col-12">
-          <q-input v-model="usuario.especialidade" label="Especialidade" outlined dense maxlength="40" />
+
+        <div class="col-md-6 col-12" v-if="!isEdicao">
+          <q-input v-model="usuario.senha2" label="Repita a senha *" outlined dense type="password" maxlength="255"
+            :rules="[
+              val => val === usuario.senha || 'Senhas não coincidem'
+            ]" />
         </div>
-        <div class="col-md-4 col-12">
-          <q-input v-model="usuario.senha" label="Senha" outlined dense type="password" maxlength="20" />
+
+        <!-- <div class="col-12" v-if="isEdicao">
+          <q-checkbox v-model="alterarSenha" label="Alterar senha" color="primary" />
+        </div> -->
+
+        <div class="col-md-6 col-12" v-if="isEdicao && alterarSenha">
+          <q-input v-model="usuario.senha" label="Nova Senha *" outlined dense type="password" maxlength="255"
+            :rules="[val => !alterarSenha]" />
         </div>
-        <div class="col-md-4 col-12">
-          <q-input v-model="usuario.senha2" label="Repita a senha" outlined dense type="password" maxlength="20" />
+
+        <div class="col-md-6 col-12" v-if="isEdicao && alterarSenha">
+          <q-input v-model="usuario.senha2" label="Repita a nova senha *" outlined dense type="password" maxlength="255"
+            :rules="[
+              val => !alterarSenha,
+              val => !alterarSenha || val === usuario.senha || 'Senhas não coincidem'
+            ]" />
         </div>
       </div>
 
       <div class="q-mt-md q-gutter-sm row items-center">
         <q-toggle v-model="usuario.ativo" label="Ativo" color="primary" />
-        <q-btn label="Cadastrar" type="submit" color="primary" icon="add" class="q-ml-sm" />
+
+        <q-space />
+
+        <q-btn flat label="Cancelar" color="grey" @click="cancelar" :disable="loading" />
+
+        <q-btn :label="isEdicao ? 'Atualizar' : 'Cadastrar'" type="submit" color="primary"
+          :icon="isEdicao ? 'edit' : 'add'" :loading="loading" />
       </div>
     </q-card>
   </q-form>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+import { useQuasar } from 'quasar'
 import LoadingOverlay from 'src/components/shared/LoadingOverlay.vue'
 
+const $q = useQuasar()
 const emit = defineEmits(['usuario-cadastrado'])
 
 const props = defineProps({
   usuarioParaEditar: {
     type: Object,
     default: null
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 
-const loading = ref(false)
+const formRef = ref()
+const alterarSenha = ref(false)
+
 const tiposUsuario = [
-  { label: 'Técnico', value: 'Técnico' },
-  { label: 'Administrador', value: 'Administrador' },
-  { label: 'Operador', value: 'Operador' },
-  { label: 'TI', value: 'TI' }
+  { label: 'Operador', value: 0 },
+  { label: 'Técnico', value: 1 }
 ]
 
 const resetForm = () => {
   usuario.value = {
     id: null,
     nome: '',
-    funcao: '',
     login: '',
     senha: '',
     senha2: '',
     email: '',
     telefone: '',
-    tipousuario: '',
-    ultimoacesso: null,
-    especialidade: '',
+    tipoUsuario: null,
     ativo: true
   }
+  alterarSenha.value = false
 }
 
 const usuario = ref({
   id: null,
   nome: '',
-  funcao: '',
   login: '',
   senha: '',
   senha2: '',
   email: '',
   telefone: '',
-  tipousuario: '',
-  ultimoacesso: null,
-  especialidade: '',
+  tipoUsuario: null,
   ativo: true
 })
+
+const isEdicao = computed(() => !!usuario.value.id)
 
 watch(() => props.usuarioParaEditar, (val) => {
   if (val) {
     usuario.value = {
       id: val.id || null,
       nome: val.nome || '',
-      funcao: val.funcao || '',
       login: val.login || '',
       senha: '',
       senha2: '',
       email: val.email || '',
       telefone: val.telefone || '',
-      tipousuario: val.tipousuario || '',
-      ultimoacesso: val.ultimoacesso || null,
-      especialidade: val.especialidade || '',
+      tipoUsuario: val.tipoUsuario ?? null,
       ativo: val.ativo ?? true
     }
+    alterarSenha.value = false
   } else {
     resetForm()
   }
 }, { immediate: true })
 
-const handleSubmit = () => {
-  loading.value = true
+const handleSubmit = async () => {
+  try {
+    const isValid = await formRef.value.validate()
+    if (!isValid) {
+      $q.notify({
+        type: 'negative',
+        message: 'Por favor, corrija os erros no formulário'
+      })
+      return
+    }
 
-  setTimeout(() => {
-    emit('usuario-cadastrado', { ...usuario.value, id: usuario.value.id ?? Date.now(), ultimoacesso: usuario.value.ultimoacesso ?? new Date().toISOString() })
-    resetForm()
-    loading.value = false
-  }, 800)
+    const dadosParaEnviar = {
+      nome: usuario.value.nome,
+      login: usuario.value.login,
+      email: usuario.value.email,
+      telefone: usuario.value.telefone,
+      tipoUsuario: usuario.value.tipoUsuario,
+      ativo: usuario.value.ativo
+    }
+
+    if (isEdicao.value && usuario.value.id) {
+      dadosParaEnviar.id = usuario.value.id
+    }
+
+    if (!isEdicao.value || (isEdicao.value && alterarSenha.value)) {
+      dadosParaEnviar.senha = usuario.value.senha
+    }
+
+    emit('usuario-cadastrado', dadosParaEnviar)
+
+    if (!isEdicao.value) {
+      resetForm()
+      formRef.value.resetValidation()
+    }
+
+  } catch (error) {
+    console.error('Erro no formulário:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Erro ao processar formulário'
+    })
+  }
+}
+
+const cancelar = () => {
+  resetForm()
+  formRef.value.resetValidation()
 }
 </script>

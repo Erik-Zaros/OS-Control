@@ -83,9 +83,9 @@ const handleSubmit = async () => {
     }
 
     if (produto.value.id) {
-      const response = await api.put('produto', produtoData)
+      const response = await api.put(`produto/${produto.value.id}`, produtoData)
 
-      if (response.data && response.data.success) {
+      if (response.status >= 200 && response.status < 300) {
         sucesso("Produto atualizado com sucesso!")
       } else {
         throw new Error('Falha ao atualizar produto')
@@ -95,7 +95,7 @@ const handleSubmit = async () => {
 
       const response = await api.post('produto', produtoData)
 
-      if (response.data && response.data.success) {
+      if (response.status >= 200 && response.status < 300) {
         sucesso("Produto cadastrado com sucesso!")
       } else {
         throw new Error('Falha ao cadastrar produto')
@@ -104,7 +104,8 @@ const handleSubmit = async () => {
 
     resetForm()
     emit('produto-cadastrado')
-  } catch {
+  } catch (error) {
+    console.error('Erro:', error)
     erro('Erro ao cadastrar/atualizar produto.')
   } finally {
     loading.value = false

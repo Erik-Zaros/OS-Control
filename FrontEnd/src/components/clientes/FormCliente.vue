@@ -150,21 +150,18 @@ const handleSubmit = async () => {
       bairro: cliente.value.bairro,
       numero: cliente.value.numero,
       cidade: cliente.value.cidade,
-      estado: cliente.value.estado,
-      criadoEm: cliente.value.criadoEm || new Date().toISOString()
+      estado: cliente.value.estado
     }
 
     let response
     if (cliente.value.id) {
-      // Editar cliente existente
-      response = await api.put('cliente', clienteData)
+      response = await api.put(`/Cliente/${cliente.value.id}`, clienteData)
     } else {
-      // Criar novo cliente
       delete clienteData.id
-      response = await api.post('cliente', clienteData)
+      response = await api.post('/Cliente', clienteData)
     }
 
-    if (response.data && response.data.success) {
+    if (response.status === 200 || response.status === 201) {
       sucesso(cliente.value.id ? "Cliente atualizado com sucesso!" : "Cliente cadastrado com sucesso!")
       resetForm()
       emit('cliente-cadastrado')
