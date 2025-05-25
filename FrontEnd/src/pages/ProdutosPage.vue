@@ -4,9 +4,6 @@
       <div class="col-12 col-md-6">
         <div class="text-h6">Cadastro de Produto</div>
       </div>
-      <div class="col-12 col-md-6 text-right">
-        <q-btn label="Exportar CSV" icon="download" color="primary" flat @click="exportarCSV" />
-      </div>
     </div>
 
     <form-produto @produto-cadastrado="atualizarProdutos" :produtoParaEditar="produtoEdicao" />
@@ -47,10 +44,6 @@ function atualizarProdutos() {
 
 function editarProduto(produto) {
   produtoEdicao.value = { ...produto }
-}
-
-function exportarCSV() {
-  window.open('/api/produto/exportar-csv', '_blank')
 }
 
 onMounted(carregarProdutos)

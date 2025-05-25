@@ -4,9 +4,6 @@
       <div class="col-12 col-md-6">
         <div class="text-h6">Cadastro de Cliente</div>
       </div>
-      <div class="col-12 col-md-6 text-right">
-        <q-btn label="Exportar CSV" icon="download" color="primary" flat @click="exportarCSV" />
-      </div>
     </div>
 
     <form-cliente @cliente-cadastrado="atualizarClientes" :clienteParaEditar="clienteEdicao" />
@@ -48,10 +45,6 @@ function atualizarClientes() {
 function editarCliente(cliente) {
   console.log('Editando cliente:', cliente)
   clienteEdicao.value = { ...cliente }
-}
-
-function exportarCSV() {
-  window.open('cliente/exportar-csv', '_blank')
 }
 
 onMounted(carregarClientes)
