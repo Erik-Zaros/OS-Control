@@ -18,7 +18,7 @@
 
       <q-list padding class="drawer-list text-grey-8">
         <q-expansion-item icon="dashboard" label="Dashboard" dense default-opened>
-          <q-item clickable to="/" exact>
+          <q-item clickable to="/dashboard/" exact>
             <q-item-section>Visão Geral</q-item-section>
           </q-item>
         </q-expansion-item>
@@ -39,10 +39,10 @@
         </q-expansion-item>
 
   <q-expansion-item icon="build" label="Ordens de Serviço" dense>
-    <q-item clickable to="/cadastro-os">
+    <q-item clickable to="/dashboard/cadastro-os">
       <q-item-section>Cadastrar OS</q-item-section>
     </q-item>
-    <q-item clickable to="/consulta-os">
+    <q-item clickable to="/dashboard/consulta-os">
       <q-item-section>Consultar OS</q-item-section>
     </q-item>
   </q-expansion-item>

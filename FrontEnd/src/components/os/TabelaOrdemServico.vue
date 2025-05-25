@@ -98,7 +98,7 @@
   const router = useRouter()
 
   function verDetalhesOS(numero) {
-  router.push(`/os/${numero}`)
+  router.push(`/dashboard/os/${numero}`)
 }
 
   const tecnicos = ref([

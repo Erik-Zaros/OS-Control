@@ -9,27 +9,10 @@
 
       <q-form @submit.prevent="handleLogin">
         <q-card-section>
-          <q-input
-            v-model="form.login"
-            label="Usuário"
-            dense
-            outlined
-            color="primary"
-            class="q-mb-md"
-            :prepend-icon="'person'"
-            required
-          />
-          <q-input
-            v-model="form.senha"
-            label="Senha"
-            type="password"
-            dense
-            outlined
-            color="primary"
-            class="q-mb-md"
-            :prepend-icon="'lock'"
-            required
-          />
+          <q-input v-model="form.login" label="Usuário" dense outlined color="primary" class="q-mb-md"
+            :prepend-icon="'person'" required />
+          <q-input v-model="form.senha" label="Senha" type="password" dense outlined color="primary" class="q-mb-md"
+            :prepend-icon="'lock'" required />
 
         </q-card-section>
 
@@ -58,7 +41,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
-import { api} from 'boot/axios'
+import { api } from 'boot/axios'
 import { useRouter, useRoute } from 'vue-router'
 import logoLight from 'src/assets/serviceCore.png'
 import logoDark from 'src/assets/serviceCoreDark.png'
@@ -84,22 +67,22 @@ const handleLogin = async () => {
       login: form.value.login,
       senha: form.value.senha
     })
-    
+
     localStorage.clear()
-    
-    const userData = response.data.data.usuario
-    const token = response.data.data.token
-    
+
+    const userData = response.data.usuario
+    const token = response.data.token
+
     localStorage.setItem('usuario', JSON.stringify(userData))
     localStorage.setItem('token', token)
-    
+
     $q.notify({ type: 'positive', message: 'Login realizado com sucesso!' })
-    
+
     const redirectPath = route.query.redirect || '/dashboard'
     router.push(redirectPath)
   } catch (error) {
     $q.notify({ type: 'negative', message: 'Falha no login!' })
-    console.error(error)
+    console.error('Erro completo:', error.response?.data)
   }
 }
 </script>
@@ -118,5 +101,4 @@ const handleLogin = async () => {
   display: block;
   margin: 0 auto 16px auto;
 }
-
 </style>

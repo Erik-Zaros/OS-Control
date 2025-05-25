@@ -35,9 +35,7 @@ const carregarClientes = async () => {
     } else {
       clientes.value = Array.isArray(response.data) ? response.data : []
     }
-  } catch (error) {
-    if (error.response) {
-    }
+  } catch {
     erro('Erro ao carregar clientes!')
   }
 }
